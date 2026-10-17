@@ -1,0 +1,1435 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#101a2c">
+    <title>Binary Lab | Digital Logic Academy</title>
+    <style>
+        :root {
+            --bg: #101a2c;
+            --panel: #17253b;
+            --panel2: #1d3049;
+            --orange: #ff9638;
+            --orange-light: #ffb86b;
+            --cream: #fffaf2;
+            --white: #fff;
+            --blue: #80dcff;
+            --muted: #b5c4d7;
+            --border: #34465e;
+            --green: #57e3a3;
+            --red: #ff818b;
+            --shadow: 0 15px 40px #0003;
+            --radius: 20px
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        html {
+            scroll-behavior: smooth
+        }
+
+        body {
+            margin: 0;
+            background: var(--bg);
+            color: var(--cream);
+            font-family: "Cairo", "Segoe UI", Tahoma, Arial, sans-serif;
+            line-height: 1.8
+        }
+
+        button,
+        input,
+        select {
+            font: inherit
+        }
+
+        button {
+            cursor: pointer
+        }
+
+        button:focus-visible,
+        input:focus-visible,
+        select:focus-visible {
+            outline: 3px solid var(--blue);
+            outline-offset: 3px
+        }
+
+        button:disabled {
+            opacity: .4;
+            cursor: not-allowed;
+            transform: none !important
+        }
+
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            flex-wrap: wrap;
+            padding: 17px clamp(18px, 5vw, 70px);
+            border-bottom: 1px solid var(--border);
+            background: #101a2cf2
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px
+        }
+
+        .logo {
+            display: grid;
+            place-items: center;
+            width: 48px;
+            height: 48px;
+            border-radius: 15px;
+            background: linear-gradient(135deg, var(--orange), var(--orange-light));
+            color: #172033;
+            font-weight: 1000;
+            font-size: 19px
+        }
+
+        .brand-name {
+            font-weight: 1000;
+            font-size: 20px;
+            color: #fff;
+            letter-spacing: 1px
+        }
+
+        .brand-sub {
+            font-size: 12px;
+            color: var(--muted)
+        }
+
+        .header-tag {
+            padding: 5px 14px;
+            border: 1px solid #ff96384d;
+            border-radius: 30px;
+            color: var(--orange-light);
+            font-size: 12px
+        }
+
+        main {
+            width: min(1160px, 100%);
+            margin: auto;
+            padding: 30px 20px 65px
+        }
+
+        .hero {
+            position: relative;
+            overflow: hidden;
+            padding: clamp(25px, 5vw, 48px);
+            border: 1px solid var(--border);
+            border-radius: 26px;
+            background: radial-gradient(ellipse at 95% 0%, #ff963824, transparent 45%), linear-gradient(140deg, #1b2c43, #131f33);
+            box-shadow: var(--shadow)
+        }
+
+        .eyebrow {
+            color: var(--orange-light);
+            font-size: 12px;
+            font-weight: 900;
+            letter-spacing: 1.5px
+        }
+
+        h1 {
+            font-size: clamp(29px, 5vw, 44px);
+            line-height: 1.35;
+            color: #fff;
+            margin: 12px 0
+        }
+
+        h1 span {
+            color: var(--orange)
+        }
+
+        .hero p {
+            max-width: 700px;
+            color: #d0ddec;
+            font-size: 17px;
+            margin-bottom: 0
+        }
+
+        .hero-bits {
+            display: flex;
+            gap: 7px;
+            flex-wrap: wrap;
+            margin-top: 25px;
+            direction: ltr
+        }
+
+        .bit {
+            display: grid;
+            place-items: center;
+            width: 37px;
+            height: 42px;
+            border-radius: 9px;
+            color: var(--orange-light);
+            border: 1px solid #ff96384d;
+            background: #ff963812;
+            font-family: Consolas, monospace;
+            font-weight: 900;
+            font-size: 19px
+        }
+
+        .section-title {
+            font-size: 25px;
+            color: #fff;
+            margin: 32px 0 16px
+        }
+
+        .section-title:before {
+            content: "";
+            display: inline-block;
+            width: 5px;
+            height: 24px;
+            border-radius: 5px;
+            background: var(--orange);
+            margin-left: 11px;
+            vertical-align: middle
+        }
+
+        .mode-grid,
+        .topic-grid,
+        .grid-2,
+        .grid-3 {
+            display: grid;
+            gap: 16px
+        }
+
+        .mode-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr))
+        }
+
+        .grid-2 {
+            grid-template-columns: repeat(2, minmax(0, 1fr))
+        }
+
+        .grid-3 {
+            grid-template-columns: repeat(3, minmax(0, 1fr))
+        }
+
+        .mode-card,
+        .panel,
+        .topic-card,
+        .mini-card {
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: var(--radius)
+        }
+
+        .mode-card {
+            padding: 26px;
+            transition: transform .2s, border-color .2s, box-shadow .2s
+        }
+
+        .mode-card:hover,
+        .topic-card:hover,
+        .mini-card:hover {
+            transform: translateY(-3px);
+            border-color: #ff963888;
+            box-shadow: var(--shadow)
+        }
+
+        .mode-icon {
+            display: grid;
+            place-items: center;
+            width: 50px;
+            height: 50px;
+            border-radius: 15px;
+            background: #ff96381c;
+            color: var(--orange);
+            font-size: 25px
+        }
+
+        .mode-card h3 {
+            color: var(--blue);
+            font-size: 21px;
+            margin: 12px 0 5px
+        }
+
+        .mode-card p {
+            color: var(--muted);
+            margin: 0 0 18px
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 10px 17px;
+            border: 1px solid transparent;
+            border-radius: 11px;
+            font-weight: 800;
+            transition: transform .18s, filter .18s, background .18s
+        }
+
+        .btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            filter: brightness(1.08)
+        }
+
+        .btn-primary {
+            background: var(--orange);
+            color: #182033
+        }
+
+        .btn-secondary {
+            background: var(--panel2);
+            color: var(--cream);
+            border-color: var(--border)
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--blue);
+            border-color: #80dcff66
+        }
+
+        .btn-danger {
+            background: #ff818b1c;
+            color: #ff9ca3;
+            border-color: #ff818b55
+        }
+
+        .btn-row {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 17px
+        }
+
+        .view {
+            display: none;
+            margin-top: 28px
+        }
+
+        .view.active {
+            display: block;
+            animation: fade .25s ease
+        }
+
+        @keyframes fade {
+            from {
+                opacity: 0;
+                transform: translateY(5px)
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0)
+            }
+        }
+
+        .toolbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 17px
+        }
+
+        .toolbar h2 {
+            color: #fff;
+            margin: 0;
+            font-size: 27px
+        }
+
+        .panel {
+            padding: clamp(17px, 3vw, 27px);
+            margin-bottom: 18px
+        }
+
+        .panel h3,
+        .lesson-content h3 {
+            color: var(--blue);
+            margin-top: 0
+        }
+
+        .muted {
+            color: var(--muted)
+        }
+
+        .topic-grid {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            margin-top: 20px
+        }
+
+        .topic-card {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 16px;
+            cursor: pointer;
+            transition: .2s
+        }
+
+        .topic-card input {
+            accent-color: var(--orange);
+            width: 18px;
+            height: 18px;
+            margin-top: 6px;
+            flex-shrink: 0
+        }
+
+        .topic-name {
+            font-weight: 900;
+            color: #fff
+        }
+
+        .topic-desc {
+            font-size: 13px;
+            color: var(--muted)
+        }
+
+        .category-label {
+            margin: 22px 0 10px;
+            color: var(--orange-light);
+            font-size: 13px;
+            font-weight: 900
+        }
+
+        .feedback {
+            display: none;
+            padding: 12px 15px;
+            border-radius: 12px;
+            margin-top: 14px
+        }
+
+        .feedback.show {
+            display: block;
+            animation: fade .2s ease
+        }
+
+        .feedback.good {
+            background: #57e3a315;
+            border: 1px solid #57e3a35a;
+            color: #a6ffd5
+        }
+
+        .feedback.bad {
+            background: #ff818b13;
+            border: 1px solid #ff818b60;
+            color: #ffc0c5
+        }
+
+        .lesson-content {
+            margin-top: 18px
+        }
+
+        .lesson-content p {
+            color: #d3deeb
+        }
+
+        .lesson-content h4 {
+            color: var(--orange-light);
+            margin: 23px 0 8px
+        }
+
+        .lesson-list {
+            padding-right: 23px;
+            color: #d3deeb
+        }
+
+        .lesson-list li {
+            margin: 7px 0
+        }
+
+        .callout {
+            padding: 15px 18px;
+            border-radius: 13px;
+            border-right: 4px solid var(--orange);
+            background: #ff963811;
+            color: #e9edf3;
+            margin: 16px 0
+        }
+
+        .formula {
+            direction: ltr;
+            unicode-bidi: isolate;
+            text-align: center;
+            background: #0d1727;
+            border: 1px solid var(--border);
+            padding: 14px;
+            border-radius: 12px;
+            color: var(--orange-light);
+            font: 700 19px Consolas, monospace;
+            overflow-wrap: anywhere;
+            margin: 12px 0
+        }
+
+        .table-wrap {
+            width: 100%;
+            overflow-x: auto;
+            border: 1px solid var(--border);
+            border-radius: 13px;
+            margin: 12px 0
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 270px
+        }
+
+        th,
+        td {
+            padding: 10px 14px;
+            border-bottom: 1px solid var(--border);
+            text-align: center
+        }
+
+        th {
+            background: #223650;
+            color: var(--blue);
+            font-size: 14px
+        }
+
+        td {
+            color: #eaf1f9
+        }
+
+        tr:last-child td {
+            border-bottom: 0
+        }
+
+        .ltr {
+            direction: ltr;
+            unicode-bidi: isolate;
+            text-align: center;
+            font-family: Consolas, monospace;
+            letter-spacing: 1px
+        }
+
+        .explain-toggle {
+            display: inline-flex;
+            margin-top: 2px;
+            padding: 7px 13px;
+            border: 1px solid #80dcff55;
+            border-radius: 9px;
+            background: #80dcff12;
+            color: var(--blue);
+            font-weight: 800
+        }
+
+        .explain-box {
+            display: none;
+            margin-top: 10px;
+            padding: 13px 16px;
+            border: 1px solid #80dcff42;
+            background: #80dcff0d;
+            border-radius: 12px;
+            color: #d9eaf5
+        }
+
+        .explain-box.show {
+            display: block;
+            animation: fade .2s ease
+        }
+
+        .steps {
+            display: grid;
+            gap: 10px;
+            margin: 14px 0
+        }
+
+        .step {
+            padding: 13px 16px;
+            border-radius: 12px;
+            background: var(--panel2);
+            border: 1px solid var(--border)
+        }
+
+        .step strong {
+            color: var(--orange-light)
+        }
+
+        .gray-work {
+            padding: 18px;
+            background: #0d1727;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            margin-top: 17px
+        }
+
+        .gray-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            flex-wrap: wrap
+        }
+
+        .gray-head h4 {
+            margin: 0;
+            color: #fff
+        }
+
+        .gray-input-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin: 18px 0 8px
+        }
+
+        .gray-input-row label {
+            color: var(--muted);
+            font-size: 14px
+        }
+
+        .text-input,
+        .select-input {
+            width: 100%;
+            background: #0c1626;
+            color: #fff;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 10px 12px;
+            min-width: 0
+        }
+
+        .gray-input {
+            max-width: 220px;
+            direction: ltr;
+            text-align: center;
+            font-family: Consolas, monospace;
+            letter-spacing: 2px
+        }
+
+        .bit-grid {
+            display: flex;
+            direction: ltr;
+            justify-content: center;
+            gap: clamp(4px, 1.4vw, 12px);
+            flex-wrap: wrap;
+            margin: 18px 0
+        }
+
+        .bit-col {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: clamp(32px, 5vw, 47px);
+            gap: 6px
+        }
+
+        .bit-cell {
+            width: clamp(32px, 5vw, 47px);
+            height: 43px;
+            display: grid;
+            place-items: center;
+            border-radius: 9px;
+            border: 1px solid var(--border);
+            background: #1a2a41;
+            color: #fff;
+            font: 900 19px Consolas, monospace;
+            position: relative
+        }
+
+        .bit-cell.source {
+            color: var(--blue)
+        }
+
+        .bit-cell.result {
+            color: var(--orange-light)
+        }
+
+        .bit-cell.active-bit {
+            border-color: var(--orange);
+            box-shadow: 0 0 0 2px #ff963829;
+            background: #3b2b24
+        }
+
+        .bit-cell.done-bit {
+            border-color: #57e3a37a
+        }
+
+        .bit-label {
+            font-size: 12px;
+            color: var(--muted)
+        }
+
+        .arrow-lane {
+            height: 52px;
+            position: relative;
+            width: 100%;
+            min-width: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center
+        }
+
+        .arrow {
+            position: absolute;
+            top: 0;
+            font-size: 20px;
+            color: var(--orange-light);
+            opacity: 0;
+            transform: translateY(8px);
+            transition: opacity .2s, transform .2s
+        }
+
+        .arrow.visible {
+            opacity: 1;
+            transform: translateY(0)
+        }
+
+        .arrow.second {
+            transition-delay: .5s
+        }
+
+        .xor-detail {
+            text-align: center;
+            border-radius: 12px;
+            padding: 14px;
+            background: var(--panel);
+            border: 1px solid var(--border);
+            min-height: 58px
+        }
+
+        .xor-equation {
+            font: 800 18px Consolas, monospace;
+            direction: ltr;
+            color: var(--blue)
+        }
+
+        .step-description {
+            color: var(--muted);
+            font-size: 14px;
+            margin-top: 8px
+        }
+
+        .progress {
+            height: 8px;
+            background: #26364b;
+            border-radius: 20px;
+            overflow: hidden;
+            margin: 15px 0
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0;
+            background: linear-gradient(90deg, var(--orange), var(--orange-light));
+            transition: width .25s
+        }
+
+        .quiz-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            flex-wrap: wrap
+        }
+
+        .counter {
+            color: var(--orange-light);
+            font-weight: 900;
+            direction: ltr
+        }
+
+        .question-en {
+            direction: ltr;
+            text-align: left;
+            unicode-bidi: plaintext;
+            font-size: clamp(19px, 3vw, 24px);
+            font-weight: 800;
+            color: #fff;
+            margin: 24px 0
+        }
+
+        .question-meta {
+            color: var(--blue);
+            font-size: 13px;
+            font-weight: 800
+        }
+
+        .answer-row {
+            display: flex;
+            gap: 10px;
+            align-items: stretch;
+            flex-wrap: wrap;
+            margin-top: 17px
+        }
+
+        .answer-row input {
+            flex: 1;
+            min-width: 180px;
+            direction: ltr;
+            text-align: left;
+            font-family: Consolas, monospace
+        }
+
+        .answer-hint {
+            font-size: 13px;
+            color: var(--muted);
+            margin-top: 7px
+        }
+
+        .score-pill {
+            display: inline-block;
+            background: #ff96381b;
+            color: var(--orange-light);
+            padding: 4px 11px;
+            border-radius: 20px;
+            font-size: 13px
+        }
+
+        .result-number {
+            direction: ltr;
+            color: var(--orange-light);
+            font-weight: 1000;
+            font-size: 30px
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 30px 12px
+        }
+
+        footer {
+            text-align: center;
+            border-top: 1px solid var(--border);
+            padding: 22px;
+            color: var(--muted);
+            font-size: 13px
+        }
+
+        .hidden {
+            display: none !important
+        }
+
+        @media(max-width:800px) {
+
+            .topic-grid,
+            .grid-3 {
+                grid-template-columns: repeat(2, minmax(0, 1fr))
+            }
+
+            .grid-2 {
+                grid-template-columns: 1fr
+            }
+        }
+
+        @media(max-width:560px) {
+            main {
+                padding: 18px 13px 45px
+            }
+
+            .mode-grid,
+            .topic-grid {
+                grid-template-columns: 1fr
+            }
+
+            .hero {
+                padding: 25px 19px
+            }
+
+            .toolbar h2 {
+                font-size: 22px
+            }
+
+            .panel {
+                padding: 15px
+            }
+
+            .btn {
+                padding: 9px 12px
+            }
+
+            .gray-work {
+                padding: 12px
+            }
+
+            .bit-col {
+                min-width: 28px
+            }
+
+            .bit-cell {
+                width: 29px;
+                height: 38px;
+                font-size: 16px
+            }
+
+            .arrow-lane {
+                height: 42px
+            }
+        }
+
+        @media(prefers-reduced-motion:reduce) {
+
+            *,
+            *::before,
+            *::after {
+                scroll-behavior: auto !important;
+                animation-duration: .01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: .01ms !important
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="brand">
+            <div class="logo">01</div>
+            <div>
+                <div class="brand-name">BINARY LAB</div>
+                <div class="brand-sub">Digital Logic Learning Academy</div>
+            </div>
+        </div>
+        <div class="header-tag">LEARN · PRACTICE · MASTER</div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="eyebrow">YOUR DIGITAL LOGIC PLAYGROUND</div>
+            <h1>افهم الـ <span>Binary Codes</span><br>خطوة بخطوة.</h1>
+            <p>اتعلّم الأكواد الرقمية وأنظمة العد من خلال شروحات منظمة وتحويلات تفاعلية، وبعدها اختبر فهمك بمسائل
+                متنوعة.</p>
+            <div class="hero-bits" aria-hidden="true">
+                <div class="bit">0</div>
+                <div class="bit">1</div>
+                <div class="bit">0</div>
+                <div class="bit">1</div>
+                <div class="bit">1</div>
+                <div class="bit">0</div>
+                <div class="bit">0</div>
+                <div class="bit">1</div>
+            </div>
+        </section>
+
+        <h2 class="section-title">اختار هتعمل إيه</h2>
+        <section class="mode-grid" id="homeModes">
+            <article class="mode-card">
+                <div class="mode-icon">⌘</div>
+                <h3>Learn & Understand</h3>
+                <p>اختار الموضوع، افهم القواعد، وشوف الأمثلة والجداول التفاعلية وخطوات التحويل.</p>
+                <button class="btn btn-primary" onclick="openLearn()">ابدأ الشرح ←</button>
+            </article>
+            <article class="mode-card">
+                <div class="mode-icon">✎</div>
+                <h3>Practice & Test</h3>
+                <p>حل مسائل باللغة الإنجليزية من موضوعات مختلفة، وتابع إجاباتك وتقدمك.</p>
+                <button class="btn btn-primary" onclick="startQuiz()">ابدأ حل المسائل ←</button>
+            </article>
+        </section>
+
+        <section class="view" id="learnView">
+            <div class="toolbar">
+                <h2>Learn & Understand</h2><button class="btn btn-secondary" onclick="goHome()">→ الرئيسية</button>
+            </div>
+            <div class="panel" id="topicPicker">
+                <h3>اختار الموضوع اللي عايز تدرسه</h3>
+                <p class="muted">اختار موضوعًا واحدًا أو أكثر، ثم اضغط «ابدأ الشرح».</p>
+                <div class="category-label">Gray Code</div>
+                <div class="topic-grid">
+                    <label class="topic-card"><input type="checkbox" value="bgray">
+                        <div>
+                            <div class="topic-name">Binary to Gray</div>
+                            <div class="topic-desc">التحويل التفاعلي خطوة بخطوة</div>
+                        </div>
+                    </label>
+                    <label class="topic-card"><input type="checkbox" value="gbin">
+                        <div>
+                            <div class="topic-name">Gray to Binary</div>
+                            <div class="topic-desc">استرجاع الرقم الثنائي</div>
+                        </div>
+                    </label>
+                    <label class="topic-card"><input type="checkbox" value="gray">
+                        <div>
+                            <div class="topic-name">Gray Code Properties</div>
+                            <div class="topic-desc">الخصائص والأمثلة والأخطاء الشائعة</div>
+                        </div>
+                    </label>
+                </div>
+                <div class="category-label">BCD and Decimal Codes</div>
+                <div class="topic-grid">
+                    <label class="topic-card"><input type="checkbox" value="bcd">
+                        <div>
+                            <div class="topic-name">BCD Code</div>
+                            <div class="topic-desc">التحويل من وإلى BCD</div>
+                        </div>
+                    </label>
+                    <label class="topic-card"><input type="checkbox" value="aiken">
+                        <div>
+                            <div class="topic-name">Aiken 2421 Code</div>
+                            <div class="topic-desc">الأوزان والتمثيل العشري</div>
+                        </div>
+                    </label>
+                    <label class="topic-card"><input type="checkbox" value="excess">
+                        <div>
+                            <div class="topic-name">Excess-3 Code</div>
+                            <div class="topic-desc">التحويل من وإلى الكود</div>
+                        </div>
+                    </label>
+                    <label class="topic-card"><input type="checkbox" value="code8421">
+                        <div>
+                            <div class="topic-name">8, 4, −2, −1 Code</div>
+                            <div class="topic-desc">الكود ذو الأوزان السالبة</div>
+                        </div>
+                    </label>
+                </div>
+                <div class="category-label">Number Systems</div>
+                <div class="topic-grid">
+                    <label class="topic-card"><input type="checkbox" value="numbers">
+                        <div>
+                            <div class="topic-name">Number Systems</div>
+                            <div class="topic-desc">Binary, Decimal, Octal, Hexadecimal</div>
+                        </div>
+                    </label>
+                </div>
+                <div class="btn-row">
+                    <button class="btn btn-secondary" onclick="selectAllTopics(true)">اختيار الكل</button>
+                    <button class="btn btn-secondary" onclick="selectAllTopics(false)">إلغاء الاختيار</button>
+                    <button class="btn btn-primary" onclick="showLessons()">ابدأ الشرح ←</button>
+                </div>
+                <div class="feedback bad" id="topicError">اختار موضوعًا واحدًا على الأقل قبل المتابعة.</div>
+            </div>
+            <div id="lessonContainer"></div>
+        </section>
+
+        <section class="view" id="quizView">
+            <div class="toolbar">
+                <h2>Practice & Test</h2><button class="btn btn-secondary" onclick="goHome()">→ الرئيسية</button>
+            </div>
+            <div class="panel">
+                <div class="quiz-top">
+                    <div class="counter" id="questionCounter">Question 1</div>
+                    <div class="score-pill" id="scorePill">Correct: 0</div>
+                </div>
+                <div class="progress">
+                    <div class="progress-bar" id="quizProgress"></div>
+                </div>
+                <div id="questionArea"></div>
+            </div>
+        </section>
+    </main>
+    <footer>BINARY LAB · Learn at your own pace · Digital Logic Academy</footer>
+
+    <script>
+        "use strict";
+        const $ = id => document.getElementById(id);
+        const escapeHTML = value => String(value).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+        const bitString = value => String(value).replace(/\s+/g, "");
+
+        function goHome() {
+            document.querySelectorAll(".view").forEach(view => view.classList.remove("active"));
+            $("homeModes").style.display = "";
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+        function openView(id) {
+            $("homeModes").style.display = "none";
+            document.querySelectorAll(".view").forEach(view => view.classList.remove("active"));
+            $(id).classList.add("active");
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+        function openLearn() {
+            openView("learnView");
+            $("topicPicker").style.display = "";
+            $("lessonContainer").innerHTML = "";
+            $("topicError").classList.remove("show");
+        }
+        function selectAllTopics(checked) {
+            document.querySelectorAll("#topicPicker input[type=checkbox]").forEach(input => input.checked = checked);
+        }
+        function toggleExplain(id, button) {
+            const box = $(id);
+            const visible = box.classList.toggle("show");
+            button.textContent = visible ? "− إخفاء التوضيح" : "＋ توضيح";
+            button.setAttribute("aria-expanded", String(visible));
+        }
+        let explanationCounter = 0;
+        function tableHTML(headers, rows, explanation) {
+            const id = "explain-" + (++explanationCounter);
+            return `<div class="table-wrap"><table><thead><tr>${headers.map(h => `<th>${escapeHTML(h)}</th>`).join("")}</tr></thead><tbody>${rows.map(row => `<tr>${row.map(cell => `<td class="${/^[01 ]+$/.test(String(cell)) ? "ltr" : ""}">${escapeHTML(cell)}</td>`).join("")}</tr>`).join("")}</tbody></table></div>
+  <button type="button" class="explain-toggle" aria-expanded="false" onclick="toggleExplain('${id}',this)">＋ توضيح</button>
+  <div class="explain-box" id="${id}">${explanation}</div>`;
+        }
+        function lesson(title, intro, body) {
+            return `<article class="panel lesson-content"><h3>${title}</h3><p>${intro}</p>${body}</article>`;
+        }
+        function standardSteps(items) {
+            return `<div class="steps">${items.map((item, index) => `<div class="step"><strong>الخطوة ${index + 1}:</strong> ${item}</div>`).join("")}</div>`;
+        }
+        function binaryToGray(binary) {
+            if (!/^[01]+$/.test(binary)) throw new Error("أدخل عددًا ثنائيًا يتكون من 0 و1 فقط.");
+            return binary[0] + binary.slice(1).split("").map((bit, i) => (Number(binary[i]) ^ Number(bit)).toString()).join("");
+        }
+        function grayToBinary(gray) {
+            if (!/^[01]+$/.test(gray)) throw new Error("أدخل Gray Code يتكون من 0 و1 فقط.");
+            let result = gray[0];
+            for (let i = 1; i < gray.length; i++)result += (Number(result[i - 1]) ^ Number(gray[i])).toString();
+            return result;
+        }
+        function binaryToDecimal(binary) {
+            if (!/^[01]+$/.test(binary)) throw new Error("العدد الثنائي غير صالح.");
+            return parseInt(binary, 2);
+        }
+        function decimalToBinary(value) {
+            if (!/^\d+$/.test(String(value)) || !Number.isSafeInteger(Number(value))) throw new Error("أدخل عددًا عشريًا صحيحًا غير سالب.");
+            return Number(value).toString(2);
+        }
+        function decimalToBCD(value) {
+            if (!/^\d+$/.test(String(value))) throw new Error("أدخل عددًا عشريًا صحيحًا غير سالب.");
+            return String(value).split("").map(d => Number(d).toString(2).padStart(4, "0")).join(" ");
+        }
+        function bcdToDecimal(value) {
+            const clean = String(value).trim().replace(/\s+/g, "");
+            if (!clean || !/^[01]+$/.test(clean) || clean.length % 4 !== 0) throw new Error("يجب إدخال مجموعات BCD صحيحة، كل مجموعة 4 بتات.");
+            const digits = clean.match(/.{4}/g).map(group => parseInt(group, 2));
+            if (digits.some(digit => digit > 9)) throw new Error("المجموعة التي قيمتها من 1010 إلى 1111 غير صالحة في BCD.");
+            return digits.join("");
+        }
+        function decimalToBase(value, base) {
+            if (!/^\d+$/.test(String(value)) || !Number.isSafeInteger(Number(value))) throw new Error("أدخل عددًا عشريًا صحيحًا غير سالب.");
+            return Number(value).toString(base).toUpperCase();
+        }
+        function baseToDecimal(value, base) {
+            const chars = base === 16 ? /^[0-9a-f]+$/i : base === 8 ? /^[0-7]+$/ : /^[01]+$/;
+            if (!chars.test(value)) throw new Error("صيغة العدد لا تتوافق مع نظام العد المحدد.");
+            return parseInt(value, base);
+        }
+
+        const bcdRows = Array.from({ length: 10 }, (_, i) => [String(i), i.toString(2).padStart(4, "0")]);
+        const aikenRows = [["0", "0000"], ["1", "0001"], ["2", "0010"], ["3", "0011"], ["4", "0100"], ["5", "1011"], ["6", "1100"], ["7", "1101"], ["8", "1110"], ["9", "1111"]];
+        const excessRows = Array.from({ length: 10 }, (_, i) => [String(i), (i + 3).toString(2).padStart(4, "0")]);
+        const code8421Rows = [["0", "0000"], ["1", "0111"], ["2", "0110"], ["3", "0101"], ["4", "0100"], ["5", "1011"], ["6", "1010"], ["7", "1001"], ["8", "1000"], ["9", "1111"]];
+
+        function makeGrayStepper(direction, initialInput) {
+            const id = "gray-stepper-" + Math.random().toString(36).slice(2, 9);
+            const label = direction === "bgray" ? "Binary" : "Gray";
+            const outputLabel = direction === "bgray" ? "Gray" : "Binary";
+            return `<div class="gray-work" id="${id}" data-direction="${direction}" data-input="${initialInput}">
+    <div class="gray-head"><h4>${direction === "bgray" ? "Binary → Gray Code" : "Gray Code → Binary"}</h4><span class="score-pill">Interactive stepper</span></div>
+    <div class="gray-input-row"><label for="${id}-input">أدخل ${label}:</label><input class="text-input gray-input" id="${id}-input" value="${initialInput}" inputmode="numeric" maxlength="64" aria-label="Input binary digits"><button class="btn btn-secondary" type="button" data-action="load">تطبيق الإدخال</button></div>
+    <div class="feedback bad" data-role="error"></div>
+    <div class="step-description" data-role="step">ابدأ بالضغط على «التالي» لمشاهدة الحل.</div>
+    <div class="bit-grid" data-role="grid"></div>
+    <div class="xor-detail" data-role="equation" aria-live="polite">لم تبدأ الخطوات بعد.</div>
+    <div class="progress"><div class="progress-bar" data-role="progress"></div></div>
+    <div class="btn-row">
+      <button class="btn btn-secondary" type="button" data-action="prev">← السابق</button>
+      <button class="btn btn-primary" type="button" data-action="next">التالي →</button>
+      <button class="btn btn-outline" type="button" data-action="solve">إظهار الحل</button>
+      <button class="btn btn-danger" type="button" data-action="reset">إعادة المثال</button>
+    </div>
+    <div class="feedback good" data-role="final"></div>
+  </div>`;
+        }
+
+        function initGraySteppers() {
+            document.querySelectorAll(".gray-work").forEach(root => {
+                if (root.dataset.initialized === "true") return;
+                root.dataset.initialized = "true";
+                const input = root.querySelector("input");
+                const grid = root.querySelector('[data-role="grid"]');
+                const equation = root.querySelector('[data-role="equation"]');
+                const stepText = root.querySelector('[data-role="step"]');
+                const error = root.querySelector('[data-role="error"]');
+                const finalBox = root.querySelector('[data-role="final"]');
+                const progress = root.querySelector('[data-role="progress"]');
+                const direction = root.dataset.direction;
+                let source = root.dataset.input, step = 0, token = 0;
+
+                function output() {
+                    return direction === "bgray" ? binaryToGray(source) : grayToBinary(source);
+                }
+                function validate(value) {
+                    const clean = bitString(value);
+                    if (!/^[01]+$/.test(clean)) throw new Error("اكتب أرقامًا ثنائية فقط: 0 و1.");
+                    if (clean.length > 32) throw new Error("الحد الأقصى لطول المثال هو 32 بتًا.");
+                    return clean;
+                }
+                function draw() {
+                    const target = output();
+                    const n = source.length;
+                    const cols = source.split("").map((bit, i) => {
+                        const isCalculated = i < step;
+                        const active = step > 1 && i === step - 1;
+                        let arrowHTML = "";
+                        if (step > 1 && i === step - 1) {
+                            arrowHTML = `<div class="arrow-lane"><span class="arrow visible">↓</span></div>`;
+                        } else if (step > 1 && i === step - 2) {
+                            arrowHTML = `<div class="arrow-lane"><span class="arrow second visible">↓</span></div>`;
+                        } else {
+                            arrowHTML = `<div class="arrow-lane"></div>`;
+                        }
+                        const out = isCalculated ? target[i] : "_";
+                        return `<div class="bit-col">
+          <div class="bit-label">${i + 1}</div>
+          <div class="bit-cell source ${active ? "active-bit" : ""}" data-bit="${i}">${bit}</div>
+          ${arrowHTML}
+          <div class="bit-cell result ${isCalculated ? "done-bit" : ""}">${out}</div>
+        </div>`;
+                    }).join("");
+                    grid.innerHTML = `<div class="bit-col"><div class="bit-label">Bit</div><div class="bit-cell"> </div><div class="arrow-lane"></div><div class="bit-label">${escapeHTML(direction === "bgray" ? "Gray" : "Binary")}</div></div>${cols}`;
+                    const completed = step === 0 ? "لم تبدأ الخطوات بعد." : step === 1
+                        ? "الخطوة 1: انسخ أول بت؛ فهو نفسه في الكودين."
+                        : `الخطوة ${step}: احسب البت رقم ${step} باستخدام XOR.`;
+                    stepText.textContent = completed;
+                    if (step === 0) {
+                        equation.innerHTML = "اضغط «التالي» لنسخ أول بت.";
+                    } else if (step === 1) {
+                        equation.innerHTML = `<div class="xor-equation">${source[0]} → ${target[0]}</div><div class="step-description">أول بت في الناتج يساوي أول بت في المدخل.</div>`;
+                    } else {
+                        const i = step - 1;
+                        const left = direction === "bgray" ? source[i - 1] : target[i - 1];
+                        const right = source[i];
+                        const result = target[i];
+                        equation.innerHTML = `<div class="xor-equation">${left} XOR ${right} = ${result}</div><div class="step-description">${direction === "bgray" ? "قارن بت Binary السابق مع بت Binary الحالي." : "قارن بت Binary السابق الذي حسبناه مع بت Gray الحالي."}</div>`;
+                        const arrows = grid.querySelectorAll(".arrow");
+                        arrows.forEach((arrow, index) => {
+                            arrow.classList.remove("visible");
+                            setTimeout(() => arrow.classList.add("visible"), index === 0 ? 20 : 520);
+                        });
+                    }
+                    progress.style.width = (step / n * 100) + "%";
+                    root.querySelector('[data-action="prev"]').disabled = step === 0;
+                    root.querySelector('[data-action="next"]').disabled = step === n;
+                    finalBox.classList.toggle("show", step === n);
+                    finalBox.innerHTML = step === n ? `<strong>النتيجة النهائية:</strong> <span class="ltr">${escapeHTML(target)}</span>` : "";
+                }
+                function load(value) {
+                    try {
+                        source = validate(value);
+                        input.value = source;
+                        root.dataset.input = source;
+                        step = 0; token++;
+                        error.classList.remove("show");
+                        draw();
+                    } catch (e) {
+                        error.textContent = e.message;
+                        error.classList.add("show");
+                    }
+                }
+                root.addEventListener("click", event => {
+                    const button = event.target.closest("button[data-action]");
+                    if (!button) return;
+                    const action = button.dataset.action;
+                    if (action === "load") { load(input.value); return; }
+                    if (action === "reset") { load(root.dataset.input); return; }
+                    if (action === "prev") { step = Math.max(0, step - 1); token++; draw(); return; }
+                    if (action === "next") { step = Math.min(source.length, step + 1); token++; draw(); return; }
+                    if (action === "solve") { step = source.length; token++; draw(); }
+                });
+                input.addEventListener("keydown", event => { if (event.key === "Enter") load(input.value); });
+                load(source);
+            });
+        }
+
+        const lessonBodies = {
+            bgray: () => lesson("Binary to Gray Code Conversion", "في Gray Code، تختلف كل قيمتين متتاليتين في بت واحد فقط. للتحويل من Binary إلى Gray ننسخ أول بت، ثم نقارن كل بت بالبت السابق له في Binary باستخدام XOR.", `
+<h4>القاعدة الأساسية</h4><div class="formula">G[0] = B[0]<br>G[i] = B[i−1] XOR B[i]</div>
+${standardSteps(["انسخ أول بت من Binary إلى Gray كما هو.", "ابدأ من البت الثاني: نفّذ XOR بين البت الحالي والبت السابق في Binary.", "كرر العملية حتى تصل إلى آخر بت."])}
+<h4>مثال محلول: 01111</h4>
+${tableHTML(["Binary السابق", "Binary الحالي", "XOR", "Gray الناتج"], [["0", "1", "0 XOR 1 = 1", "1"], ["1", "1", "1 XOR 1 = 0", "0"], ["1", "1", "1 XOR 1 = 0", "0"], ["1", "1", "1 XOR 1 = 0", "0"]], "كل صف يحسب بت Gray واحدًا. عند اختلاف البتين تكون نتيجة XOR هي 1، وعند تساويهما تكون النتيجة 0. أول بت لا يدخل في عمليات XOR؛ بل يتم نسخه مباشرة.")}
+<div class="formula">Binary: 01111 → Gray: 01000</div>
+<h4>جرّب التحويل بنفسك</h4>${makeGrayStepper("bgray", "01111")}
+<div class="callout">خطأ شائع: لا تقارن بت Gray السابق هنا. عند التحويل من Binary إلى Gray، تتم مقارنة البتات المتجاورة في العدد Binary الأصلي.</div>`),
+            gbin: () => lesson("Gray Code to Binary Conversion", "للرجوع من Gray Code إلى Binary، ننسخ أول بت ثم نحسب كل بت جديد من خلال XOR بين بت Binary السابق الذي تم حسابه وبت Gray الحالي.", `
+<h4>القاعدة الأساسية</h4><div class="formula">B[0] = G[0]<br>B[i] = B[i−1] XOR G[i]</div>
+${standardSteps(["انسخ أول بت من Gray إلى Binary.", "استخدم آخر بت Binary تم حسابه مع بت Gray الحالي لإجراء XOR.", "كرر العملية حتى يكتمل العدد الثنائي."])}
+<h4>مثال محلول: 01000</h4>
+${tableHTML(["Binary السابق", "Gray الحالي", "XOR", "Binary الناتج"], [["0", "1", "0 XOR 1 = 1", "1"], ["1", "0", "1 XOR 0 = 1", "1"], ["1", "0", "1 XOR 0 = 1", "1"], ["1", "0", "1 XOR 0 = 1", "1"]], "في هذا الجدول، العمود الأول هو بت Binary الذي تم حسابه في الخطوة السابقة، وليس البت السابق في Gray. نستخدمه مع بت Gray الحالي للحصول على بت Binary التالي.")}
+<div class="formula">Gray: 01000 → Binary: 01111</div>
+<h4>جرّب التحويل بنفسك</h4>${makeGrayStepper("gbin", "01000")}
+<div class="callout">خطأ شائع: عند التحويل من Gray إلى Binary، لا تستخدم البت السابق من Gray في XOR؛ استخدم بت Binary السابق الذي تم حسابه.</div>`),
+            gray: () => lesson("Gray Code Properties", "Gray Code هو نظام ترميز تتغير فيه خانة واحدة فقط بين كل قيمتين متتاليتين في تسلسل Gray القياسي المنعكس.", `
+<h4>الخصائص الأساسية</h4><ul class="lesson-list"><li>أول قيمة في التسلسل ذي البتات الأربعة هي 0000.</li><li>تختلف القيم المتجاورة في بت واحد فقط.</li><li>يقلل هذا الترميز من أخطاء الانتقال المتزامن بين عدة بتات في بعض التطبيقات الرقمية.</li><li>يمكن التحويل بين Gray وBinary باستخدام XOR.</li></ul>
+<h4>أول ثماني قيم من تسلسل Gray ذي 3 بتات</h4>
+${tableHTML(["Decimal", "Binary", "Gray"], Array.from({ length: 8 }, (_, i) => [String(i), i.toString(2).padStart(3, "0"), binaryToGray(i.toString(2).padStart(3, "0"))]), "قارن عمود Gray بين كل صف والصف الذي يليه: ستلاحظ أن بتًا واحدًا فقط يتغير في كل انتقال. هذا هو أهم ما يميز Gray Code المنعكس.")}
+<div class="callout">لا تخلط بين Gray Code والتمثيل الثنائي العادي؛ فمثلًا القيمة العشرية 2 تمثلها Binary بالعدد 10، بينما Gray المقابل هو 11.</div>`),
+            bcd: () => lesson("Binary Coded Decimal (BCD)", "في ترميز BCD من نوع 8421، يُمثَّل كل رقم عشري منفردًا باستخدام أربع بتات. لذلك يختلف BCD عن تحويل العدد العشري كله إلى Binary.", `
+<h4>جدول BCD من 8421</h4>${tableHTML(["Decimal digit", "BCD"], bcdRows, "كل صف يوضح تمثيل رقم عشري واحد بأربع بتات. لتمثيل العدد 25 مثلًا، نمثل الرقم 2 بالبتات 0010 والرقم 5 بالبتات 0101، فتكون النتيجة 0010 0101.")}
+<h4>Decimal إلى BCD</h4>${standardSteps(["قسّم العدد العشري إلى أرقامه المنفردة.", "حوّل كل رقم إلى تمثيل Binary من أربع بتات.", "اجمع المجموعات بالترتيب نفسه مع الفصل بينها بمسافة."])}
+<div class="formula">25 → 0010 0101</div>
+<h4>BCD إلى Decimal</h4>${standardSteps(["قسّم سلسلة البتات إلى مجموعات من أربع بتات.", "حوّل كل مجموعة إلى رقم عشري.", "ارفض أي مجموعة قيمتها من 1010 إلى 1111 لأنها غير صالحة في BCD 8421."])}
+<div class="formula">1001 0010 → 92</div>
+<div class="callout">الفرق المهم: 12 بالـ Binary العادي = 1100، أما BCD للعدد 12 = 0001 0010. لا تخلط بين الطريقتين.</div>`),
+            aiken: () => lesson("Aiken 2421 Code", "Aiken 2421 هو كود عشري موزون يستخدم الأوزان 2 و4 و2 و1، وله جدول ترميز محدد للأرقام العشرية.", `
+<h4>جدول Aiken 2421</h4>${tableHTML(["Decimal digit", "Aiken 2421"], aikenRows, "الكود له تمثيل محدد لكل رقم عشري. مثلًا الرقم 5 يمثله 1011 في هذا الجدول. لا تفترض أن جميع الأرقام تستخدم تمثيل Binary العادي.")}
+<h4>مثال: قيمة 1101</h4><div class="formula">1×2 + 1×4 + 0×2 + 1×1 = 7</div>
+<p>إذن قيمة الكود 1101 هي 7 وفق أوزان 2421.</p>
+<div class="callout">عند فك ترميز Aiken، استخدم جدول الكود المعتمد أو أوزانه، ولا تطبق قواعد BCD 8421 عليه.</div>`),
+            excess: () => lesson("Excess-3 Code", "Excess-3 هو كود عشري غير موزون. لترميز كل رقم عشري، أضف 3 إلى الرقم ثم حوّل الناتج إلى Binary من أربع بتات.", `
+<h4>جدول Excess-3</h4>${tableHTML(["Decimal digit", "Digit + 3", "Excess-3"], excessRows.map(([d, b]) => [d, String(Number(d) + 3), b]), "يُضاف الرقم 3 إلى كل رقم عشري بشكل مستقل، ثم يُحوّل الناتج إلى أربع بتات. مثلًا 4 + 3 = 7، وتمثيل 7 هو 0111.")}
+<h4>التحويل إلى Excess-3</h4>${standardSteps(["افصل العدد العشري إلى أرقام منفردة.", "أضف 3 إلى كل رقم.", "حوّل كل ناتج إلى Binary من أربع بتات."])}
+<h4>فك ترميز Excess-3</h4>${standardSteps(["حوّل كل مجموعة من أربع بتات إلى قيمة عشرية.", "اطرح 3 من القيمة.", "الناتج هو الرقم العشري الأصلي."])}
+<div class="formula">Decimal 4 → 4 + 3 = 7 → 0111</div>`),
+            code8421: () => lesson("8, 4, −2, −1 Code", "هذا كود موزون بأربعة أوزان هي 8 و4 و−2 و−1. تُحسب القيمة بجمع الأوزان التي تقابلها البتات 1.", `
+<h4>جدول الكود</h4>${tableHTML(["Decimal digit", "8, 4, −2, −1"], code8421Rows, "اقرأ البتات من اليسار إلى اليمين واضرب كل بت في وزنه المقابل. ثم اجمع النواتج؛ الأوزان السالبة تجعل بعض الحدود مطروحة بدلًا من إضافتها.")}
+<h4>مثال: 1011</h4><div class="formula">1×8 + 0×4 + 1×(−2) + 1×(−1) = 5</div>
+<p>إذن قيمة 1011 هي 5 في هذا الكود.</p>
+<div class="callout">لا تقرأ 1011 بوصفه عددًا Binary عاديًا؛ قيمته Binary هي 11، أما قيمته في الكود الموزون هنا فهي 5.</div>`),
+            numbers: () => lesson("Number Systems", "أنظمة العد تختلف في الأساس (Base). قيمة كل خانة تعتمد على الأساس وعلى موقع الخانة من اليمين.", `
+<h4>الأنظمة الأساسية</h4>${tableHTML(["System", "Base", "Allowed digits", "Example"], [["Binary", "2", "0–1", "1011₂"], ["Octal", "8", "0–7", "17₈"], ["Decimal", "10", "0–9", "25₁₀"], ["Hexadecimal", "16", "0–9, A–F", "2F₁₆"]], "الأساس يحدد عدد الرموز الممكنة. في النظام السداسي عشري، تمثل الحروف A إلى F القيم من 10 إلى 15.")}
+<h4>التحويل إلى Decimal</h4><p>اضرب كل خانة في الأساس مرفوعًا إلى موقعها، بدءًا من الصفر من جهة اليمين، ثم اجمع القيم.</p>
+<div class="formula">1011₂ = 1×8 + 0×4 + 1×2 + 1×1 = 11₁₀</div>
+<h4>التحويل من Decimal إلى نظام آخر</h4><p>يمكن استخدام القسمة المتكررة على الأساس المطلوب وقراءة البواقي من الأخير إلى الأول، أو استخدام التحويل البرمجي للحسابات الصحيحة غير السالبة.</p>
+${tableHTML(["Conversion", "Result"], [["Decimal 25 → Binary", "11001"], ["Decimal 25 → Octal", "31"], ["Decimal 25 → Hexadecimal", "19"]], "العدد 25 يساوي 11001 في Binary، و31 في Octal، و19 في Hexadecimal. كل تمثيل يختلف لأن أوزان الخانات تتغير مع الأساس.")}
+<div class="callout">في Hexadecimal، استخدم A=10 وB=11 وC=12 وD=13 وE=14 وF=15.</div>`)
+        };
+
+        function showLessons() {
+            const selected = [...document.querySelectorAll("#topicPicker input:checked")].map(input => input.value);
+            if (!selected.length) { $("topicError").classList.add("show"); return; }
+            $("topicError").classList.remove("show");
+            $("topicPicker").style.display = "none";
+            const titles = { bgray: "Binary to Gray", gbin: "Gray to Binary", gray: "Gray Code Properties", bcd: "BCD Code", aiken: "Aiken 2421 Code", excess: "Excess-3 Code", code8421: "8, 4, −2, −1 Code", numbers: "Number Systems" };
+            $("lessonContainer").innerHTML = `<div class="toolbar"><h2>الموضوعات المختارة</h2><button class="btn btn-secondary" onclick="backToTopics()">تغيير الموضوعات</button></div>` + selected.map(key => lessonBodies[key]()).join("");
+            initGraySteppers();
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+        function backToTopics() {
+            $("topicPicker").style.display = "";
+            $("lessonContainer").innerHTML = "";
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+
+        /* The practice bank is built with verified conversion functions.
+           Each question stores its own state so navigation never loses an answer. */
+        function makeQuestion(topic, prompt, answer, type = "binary", hint = "") {
+            return { id: topic + "-" + Math.random().toString(36).slice(2, 10), topic, prompt, answer: String(answer), type, hint, state: { input: "", checked: false, correct: false, showSolution: false } };
+        }
+        function createQuestionBank() {
+            const bank = [];
+            const binaryInputs = ["0", "1", "10", "11", "101", "110", "111", "1000", "1010", "1101", "01111", "10010", "101101", "110010", "111001"];
+            binaryInputs.forEach(b => bank.push(makeQuestion("Binary to Gray", `Convert the binary number ${b} to Gray code.`, binaryToGray(b), "binary", "Enter a binary string using 0 and 1.")));
+            const grayInputs = ["0", "1", "11", "10", "110", "111", "101", "100", "01000", "01110", "1101", "1011", "11100", "10011", "110101"];
+            grayInputs.forEach(g => bank.push(makeQuestion("Gray to Binary", `Convert the Gray code ${g} to its equivalent binary number.`, grayToBinary(g), "binary", "Enter a binary string using 0 and 1.")));
+            [0, 1, 2, 3, 4, 5, 7, 8, 9, 12, 19, 25, 37, 64, 99, 125, 255].forEach(n => {
+                bank.push(makeQuestion("Decimal to Binary", `Convert the decimal number ${n} to binary.`, decimalToBinary(n), "binary"));
+                bank.push(makeQuestion("Decimal to BCD", `Convert the decimal number ${n} to BCD.`, decimalToBCD(String(n)), "bcd", "Use four bits per decimal digit. Spaces between groups are optional."));
+            });
+            ["101", "1111", "10000", "11001", "100101", "111111", "1010101", "01111", "110010"].forEach(b => {
+                bank.push(makeQuestion("Binary to Decimal", `Convert the binary number ${b} to decimal.`, String(binaryToDecimal(b)), "decimal"));
+            });
+            [7, 8, 15, 25, 42, 63, 100, 127, 255, 512].forEach(n => {
+                bank.push(makeQuestion("Decimal to Octal", `Convert the decimal number ${n} to octal.`, decimalToBase(n, 8), "text"));
+                bank.push(makeQuestion("Decimal to Hexadecimal", `Convert the decimal number ${n} to hexadecimal.`, decimalToBase(n, 16), "text"));
+            });
+            ["0000", "0001", "0010", "0011", "0100", "0101", "0110", "0111", "1000", "1001", "0010 0101", "1001 0010"].forEach(b => {
+                bank.push(makeQuestion("BCD to Decimal", `Decode the BCD number ${b}.`, bcdToDecimal(b), "decimal"));
+            });
+            [3, 5, 7, 9, 12, 18, 24, 35, 46, 57, 89].forEach(n => {
+                bank.push(makeQuestion("Binary to Decimal", `Convert the binary number ${n.toString(2)} to decimal.`, String(n), "decimal"));
+            });
+            return bank;
+        }
+        let questionBank = createQuestionBank();
+        let quizQuestions = [], quizIndex = 0;
+        function shuffle(array) {
+            const result = [...array];
+            for (let i = result.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1));[result[i], result[j]] = [result[j], result[i]]; }
+            return result;
+        }
+        function normalizeAnswer(value, type) {
+            let result = String(value).trim().toUpperCase();
+            if (type === "binary") return result.replace(/\s+/g, "");
+            if (type === "bcd") return result.replace(/\s+/g, "");
+            if (type === "decimal") return result.replace(/,/g, "");
+            return result.replace(/\s+/g, "");
+        }
+        function checkQuestionAnswer(question, input) {
+            const clean = normalizeAnswer(input, question.type);
+            if (!clean) return { valid: false, message: "Enter your answer before checking." };
+            if (question.type === "binary" && !/^[01]+$/.test(clean)) return { valid: false, message: "Use binary digits only: 0 and 1." };
+            if (question.type === "decimal" && !/^\d+$/.test(clean)) return { valid: false, message: "Enter a non-negative decimal integer." };
+            if (question.type === "bcd") {
+                try {
+                    const decoded = bcdToDecimal(clean);
+                    const expected = bcdToDecimal(question.answer);
+                    return { valid: true, correct: decoded === expected, message: decoded === expected ? "Correct! Well done." : "Not quite. Check each four-bit BCD group and try again." };
+                } catch (error) { return { valid: false, message: error.message }; }
+            }
+            const expected = normalizeAnswer(question.answer, question.type);
+            return { valid: true, correct: clean === expected, message: clean === expected ? "Correct! Well done." : "Not quite. Try again; the correct answer is not revealed automatically." };
+        }
+        function startQuiz() {
+            openView("quizView");
+            quizQuestions = shuffle(questionBank).map(question => ({ ...question, state: { input: "", checked: false, correct: false, showSolution: false } }));
+            quizIndex = 0;
+            renderQuestion();
+        }
+        function getScore() {
+            return quizQuestions.filter(q => q.state.checked && q.state.correct).length;
+        }
+        function getAnswered() {
+            return quizQuestions.filter(q => q.state.checked).length;
+        }
+        function renderQuestion() {
+            if (quizIndex >= quizQuestions.length) { renderResults(); return; }
+            const q = quizQuestions[quizIndex], state = q.state;
+            $("questionCounter").textContent = `Question ${quizIndex + 1} / ${quizQuestions.length}`;
+            $("scorePill").textContent = `Correct: ${getScore()} · Answered: ${getAnswered()}`;
+            $("quizProgress").style.width = (getAnswered() / quizQuestions.length * 100) + "%";
+            const inputType = q.type === "decimal" ? "decimal" : q.type === "binary" || q.type === "bcd" ? "numeric" : "text";
+            const inputPattern = q.type === "binary" || q.type === "bcd" ? 'pattern="[01\\s]+"' : '';
+            $("questionArea").innerHTML = `
+    <div class="question-meta">${escapeHTML(q.topic)}</div>
+    <div class="question-en">${escapeHTML(q.prompt)}</div>
+    <label for="answerInput">Your answer</label>
+    <div class="answer-row"><input id="answerInput" class="text-input" type="text" inputmode="${inputType}" ${inputPattern} autocomplete="off" spellcheck="false" placeholder="${q.type === "bcd" ? "e.g. 0010 0101" : "Type your answer"}" value="${escapeHTML(state.input)}" ${state.checked ? "disabled" : ""}>
+    <button class="btn btn-primary" id="checkAnswer" ${state.checked ? "disabled" : ""}>Check Answer</button></div>
+    <div class="answer-hint">${escapeHTML(q.hint || "Enter your answer, then choose Check Answer.")}</div>
+    <div class="feedback" id="answerFeedback" aria-live="polite"></div>
+    <div class="btn-row">
+      <button class="btn btn-secondary" id="prevQuestion" ${quizIndex === 0 ? "disabled" : ""}>← Previous Question</button>
+      <button class="btn btn-primary" id="nextQuestion">${quizIndex === quizQuestions.length - 1 ? "Finish Session" : "Next Question →"}</button>
+      ${state.checked && !state.correct ? '<button class="btn btn-outline" id="showSolution">Show Solution</button>' : ""}
+    </div>
+    <div class="feedback ${state.checked ? (state.correct ? "good" : "bad") : ""} ${state.checked ? "show" : ""}" id="stateFeedback" aria-live="polite">${state.checked ? `<strong>${state.correct ? "Correct! ✓" : "Incorrect — try reviewing the method."}</strong>${state.showSolution ? `<br>Correct answer: <span class="ltr">${escapeHTML(q.answer)}</span>` : ""}${state.correct ? "" : "<br>You can reveal the solution if you want to see the expected result."}` : ""}</div>`;
+            const input = $("answerInput");
+            input.addEventListener("input", () => { state.input = input.value; });
+            input.addEventListener("keydown", event => { if (event.key === "Enter" && !state.checked) checkAnswer(); });
+            $("checkAnswer").addEventListener("click", checkAnswer);
+            $("prevQuestion").addEventListener("click", () => { if (quizIndex > 0) { quizIndex--; renderQuestion(); } });
+            $("nextQuestion").addEventListener("click", () => { if (quizIndex < quizQuestions.length - 1) { quizIndex++; renderQuestion(); } else renderResults(); });
+            const show = $("showSolution");
+            if (show) show.addEventListener("click", () => { state.showSolution = true; renderQuestion(); });
+        }
+        function checkAnswer() {
+            const q = quizQuestions[quizIndex], state = q.state, input = $("answerInput").value;
+            state.input = input;
+            if (!String(input).trim()) {
+                const fb = $("answerFeedback"); fb.className = "feedback bad show"; fb.textContent = "Please enter your answer before checking."; return;
+            }
+            const result = checkQuestionAnswer(q, input);
+            const fb = $("answerFeedback");
+            if (!result.valid) { fb.className = "feedback bad show"; fb.textContent = result.message; return; }
+            state.checked = true; state.correct = result.correct;
+            renderQuestion();
+        }
+        function renderResults() {
+            $("questionCounter").textContent = "Quiz Complete";
+            $("scorePill").textContent = `Correct: ${getScore()} · Answered: ${getAnswered()}`;
+            $("quizProgress").style.width = "100%";
+            const score = getScore(), total = quizQuestions.length, answered = getAnswered();
+            $("questionArea").innerHTML = `<div class="empty-state">
+    <div style="font-size:45px;color:var(--orange)">✦</div>
+    <h2 style="color:#fff">You've completed the practice!</h2>
+    <div class="result-number">${score} / ${total}</div>
+    <p>Correct answers: ${score} · Incorrect answers: ${answered - score} · Unanswered: ${total - answered}</p>
+    <p class="muted">${score === total ? "Excellent work! You answered every question correctly." : score >= total * .7 ? "Great job! Review any mistakes and keep practicing." : "Keep practicing! Review the lessons and try a new session."}</p>
+    <div class="btn-row" style="justify-content:center"><button class="btn btn-primary" onclick="startQuiz()">Try Another Random Session</button><button class="btn btn-secondary" onclick="goHome()">Back to Home</button></div>
+  </div>`;
+        }
+
+        /* Quick mathematical sanity checks for the core conversions. */
+        console.assert(binaryToGray("01111") === "01000", "Binary to Gray check failed");
+        console.assert(grayToBinary("01000") === "01111", "Gray to Binary check failed");
+        console.assert(decimalToBCD("25") === "0010 0101", "Decimal to BCD check failed");
+        console.assert(bcdToDecimal("0010 0101") === "25", "BCD to Decimal check failed");
+        console.assert(decimalToBinary(25) === "11001", "Decimal to Binary check failed");
+    </script>
+</body>
+
+</html>
